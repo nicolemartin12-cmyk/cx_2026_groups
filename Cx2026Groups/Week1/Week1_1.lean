@@ -24,7 +24,7 @@ set_option linter.unusedTactic false
 
 /-!
 The `variable` command introduces variables that may be used in subsequent definitions,
-examples and theorems. 
+examples and theorems.
 -/
 
 variable (x y : ℤ)
@@ -57,7 +57,7 @@ That is `rw [h1]` has the effect of changing the target to `3 * (5 * y) - 4 * y 
 
 Then `rw [h2]` changes the target to `3 * (5 * 2) - 4 * 2 = 22`
 
-The tactic {tactic}`norm_num` is used to prove arithmetic goals. 
+The tactic {tactic}`norm_num` is used to prove arithmetic goals.
 -/
 
 /-!
@@ -80,11 +80,16 @@ Before you start, think about how each {tactic}`rw` line will change the target.
 variable (z : ℤ)
 
 example (h1 : x = 3 * z) (h2 : y = 9) (h3 : z = 8 - y) : 8 * x + 4 *y + 2 * z = 10 := by
-  sorry
+  rw [h1]
+  rw [h3]
+  rw [h2]
+  norm_num
   done
 
 example (h1 : x = 3) (h2 : y = 4 * x ^ 2) : y = 36 := by
-  sorry
+  rw [h2]
+  rw [h1]
+  norm_num
   done
 
 /-!
@@ -107,7 +112,8 @@ Use a backwards rewrite, followed by a forwards rewrite and `norm_num`.
 -/
 
 example (h1 : x + y = 6) (h2 : x + y = z) : 2 * z = 12 := by
-  sorry
+  rw [← h2, h1]
+  norm_num
   done
 
 /-!
@@ -142,14 +148,15 @@ Use `add_assoc` to expose the sum in the hypothesis, then rewrite using that hyp
 -/
 
 example (h : y + z = 9) : (x + y) + z = x + 9 := by
-  sorry
+  rw [add_assoc, h]
   done
 
 example (h : x + y = 9) : x + (y + z) = 9 + z := by
-  sorry
+  rw [← add_assoc, h]
   done
 
 /-!
+
 ## Exercise 1.5
 
 Combine regrouping, rewriting with both hypotheses, and arithmetic. Predict the target after
@@ -157,10 +164,11 @@ each rewrite before checking it in the InfoView.
 -/
 
 example (h1 : x = 3) (h2 : y + z = 8) : (x + y) + z = 11 := by
-  sorry
+  rw [add_assoc, h1, h2]
+  norm_num
   done
-
 /-!
+
 ## Exercise 1.6
 
 Reassociate a sum of four terms. You will need two uses of `add_assoc`. Give its arguments
@@ -168,5 +176,6 @@ explicitly so that each rewrite changes the grouping you intend.
 -/
 
 example (w : ℤ) : ((w + x) + y) + z = w + (x + (y + z)) := by
-  sorry
+  rw [add_assoc (w + x) y z]
+  rw [add_assoc w x (y + z)]
   done
