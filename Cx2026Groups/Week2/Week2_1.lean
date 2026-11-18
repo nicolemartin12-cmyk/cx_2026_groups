@@ -40,8 +40,9 @@ regrouping the product, then simplify the inverse pair and the identity.
 -/
 
 lemma inv_mul_cancel_left : g⁻¹ * (g * x) = x := by
-  sorry
-
+  rw [← mul_assoc]
+  rw [inv_mul_cancel]
+  rw [one_mul]
 NewTheorem cx_2026.inv_mul_cancel_left
 
 /-!
@@ -52,8 +53,10 @@ identity you proved in Exercise 0.4.
 -/
 
 lemma mul_inv_cancel_left : g * (g⁻¹ * x) = x := by
-  sorry
-
+  calc
+  g * (g⁻¹ * x) = (g * g⁻¹) * x := by rw [mul_assoc]
+  _ = 1 * x := by rw [mul_inv_cancel]
+  _ = x := by rw [one_mul]
 NewTheorem cx_2026.mul_inv_cancel_left
 
 /-!
@@ -65,9 +68,9 @@ If $`gx=gy`, multiply both sides on the left by $`g^{-1}` and use
 
 example (h : g * x = g * y) : x = y := by
   calc
-    x = g⁻¹ * (g * x) := by sorry
-    _ = g⁻¹ * (g * y) := by sorry
-    _ = y := by sorry
+    x = g⁻¹ * (g * x) := by rw [inv_mul_cancel_left]
+    _ = g⁻¹ * (g * y) := by rw [h]
+    _ = y := by rw [inv_mul_cancel_left]
 
 /-!
 ## Exercise 1.4
@@ -79,9 +82,9 @@ and simplify. Notice the order of the factors in the result.
 
 lemma mul_inv_rev : (x * y)⁻¹ = y⁻¹ * x⁻¹ := by
   calc
-    (x * y)⁻¹ = 1 * (x * y)⁻¹ := by sorry
-    _ = ((y⁻¹ * x⁻¹) * (x * y)) * (x * y)⁻¹ := by sorry
-    _ = y⁻¹ * x⁻¹ := by sorry
+    (x * y)⁻¹ = 1 * (x * y)⁻¹ := by rw [one_mul]
+    _ = ((y⁻¹ * x⁻¹) * (x * y)) * (x * y)⁻¹ := by rw [inv_mul_inv_mul_mul_cancel]
+    _ = y⁻¹ * x⁻¹ := by rw [mul_assoc, mul_inv_cancel, mul_one]
 
 NewTheorem cx_2026.mul_inv_rev
 
@@ -91,11 +94,10 @@ NewTheorem cx_2026.mul_inv_rev
 Let's prove the right cancelling versions of our previous results.
 -/
 
-lemma mul_inv_cancel_right : (x * g) * g⁻¹ = x := by 
+lemma mul_inv_cancel_right : (x * g) * g⁻¹ = x := by
   calc
-    (x * g) * g⁻¹ = sorry := by sorry
-    _ = x := by sorry
-  done
+    (x * g) * g⁻¹ = x * (g * g⁻¹) := by rw [mul_assoc]
+    _ = x := by rw [mul_inv_cancel, mul_one]
 
 NewTheorem cx_2026.mul_inv_cancel_right
 
@@ -105,9 +107,8 @@ NewTheorem cx_2026.mul_inv_cancel_right
 
 lemma inv_mul_cancel_right : (x * g⁻¹) * g = x := by
   calc
-    (x * g⁻¹) * g = sorry := by sorry
-    _ = x  := by sorry
-  done
+    (x * g⁻¹) * g = x * (g⁻¹ * g) := by rw [mul_assoc]
+    _ = x  := by rw [inv_mul_cancel, mul_one]
 
 NewTheorem cx_2026.inv_mul_cancel_right
 
