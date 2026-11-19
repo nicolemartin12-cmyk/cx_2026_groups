@@ -87,18 +87,18 @@ Each justification can be accomplished using a `rw`.
 NewTactic calc
 
 public section
- 
+
 set_option course.checkProofs true
 
 NewTactic sorry done
 
 lemma inv_mul_inv_mul_mul_cancel : (y⁻¹ * x⁻¹) * (x * y) = 1 := by
   calc
-    (y⁻¹ * x⁻¹) * (x * y) = y⁻¹ * (x⁻¹ * (x * y)) := by sorry
-    _ = sorry := by sorry
-    _ = sorry := by sorry
-    _ = sorry := by sorry
-    _ = 1 := by sorry
+    (y⁻¹ * x⁻¹) * (x * y) = y⁻¹ * (x⁻¹ * (x * y)) := by rw [mul_assoc y⁻¹ x⁻¹ (x * y)]
+    _ = y⁻¹ * ((x⁻¹ * x) * y) := by rw [mul_assoc]
+    _ = y⁻¹ * (1 * y) := by rw [inv_mul_cancel]
+    _ = y⁻¹ * y := by rw [one_mul]
+    _ = 1 := by rw [inv_mul_cancel]
   done
 
 NewTheorem cx_2026.inv_mul_inv_mul_mul_cancel
@@ -115,10 +115,10 @@ each approach?
 -/
 
 example : (y⁻¹ * x⁻¹) * (x * y) = 1 := by
-  sorry
+  rw [mul_assoc y⁻¹ x⁻¹ (x * y)]
+  rw [← mul_assoc x⁻¹ x y]
+  rw [inv_mul_cancel, one_mul, inv_mul_cancel]
   done
-
-
 /-!
 ## Exercise 0.3
 
@@ -130,10 +130,10 @@ exercise, you may find it helpful to use {name}`one_mul`, {name}`mul_assoc`, and
 lemma inv_inv : x⁻¹⁻¹ = x := by
   calc
     x⁻¹⁻¹ = x⁻¹⁻¹ * 1 := by rw [mul_one]
-    _ = sorry := by sorry
-    _ = sorry := by sorry
-    _ = sorry := by sorry
-    _ = x := by sorry
+    _ = x⁻¹⁻¹ * (x⁻¹ * x) := by rw [inv_mul_cancel]
+    _ = (x⁻¹⁻¹ * x⁻¹) * x := by rw [← mul_assoc]
+    _ = 1 * x := by rw [inv_mul_cancel]
+    _ = x := by rw [one_mul]
   done
 
 NewTheorem cx_2026.inv_inv
@@ -148,12 +148,12 @@ proved in this file.
 
 lemma mul_inv_cancel : y * y⁻¹ = 1 := by
   calc
-    y * y⁻¹ = sorry := by sorry
-    _ = 1 := by sorry
+    y * y⁻¹ = y⁻¹⁻¹ * y⁻¹ := by rw [inv_inv]
+    _ = 1 := by rw [inv_mul_cancel]
   done
 
 NewTheorem cx_2026.mul_inv_cancel
 
 end
 
-end cx_2026 
+end cx_2026
