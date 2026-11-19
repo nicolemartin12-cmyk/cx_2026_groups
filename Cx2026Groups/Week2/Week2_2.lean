@@ -45,8 +45,14 @@ Remember {name}`inv_mul_cancel`, the result that `g⁻¹ * g = 1`.
 -/
 
 lemma mul_left_cancel (h : z * x = z * y) : x = y := by
-  calc x = sorry := by sorry
-    _ = y := by sorry
+  calc
+    x = 1 * x := by rw [one_mul]
+    _ = (z⁻¹ * z) * x := by rw [← inv_mul_cancel]
+    _ = z⁻¹ * (z * x) := by rw [mul_assoc]
+    _ = z⁻¹ * (z * y) := by rw [h]
+    _ = (z⁻¹ * z) * y := by rw [mul_assoc]
+    _ = 1 * y := by rw [inv_mul_cancel]
+    _ = y := by rw [one_mul]
   done
 
 NewTheorem cx_2026.mul_left_cancel
@@ -59,8 +65,13 @@ Now prove the corresponding result that if `x * z = y * z`, then `x = y`.
 
 lemma mul_right_cancel (h : x * z = y * z) : x = y := by
   calc
-    x = sorry := by sorry
-    _ = y := sorry
+    x = x * 1 := by rw [mul_one]
+    _ = x * (z * z⁻¹) := by rw [← mul_inv_cancel]
+    _ = (x * z) * z⁻¹ := by rw [mul_assoc]
+    _ = (y * z) * z⁻¹ := by rw [h]
+    _ = y * (z * z⁻¹) := by rw [mul_assoc]
+    _ = y * 1 := by rw [mul_inv_cancel]
+    _ = y := by rw [mul_one]
   done
 
 NewTheorem cx_2026.mul_right_cancel
@@ -103,8 +114,6 @@ We can then supply the remaining condition `a ^ 2 * ?z = b ^ 2 * ?z` using `appl
 example (a b c : G) (h : a ^ 2 * c = b ^ 2 * c) : a ^ 2 = b ^ 2:= by
   apply mul_right_cancel
   apply h
-  done
-
 /-!
 ## Exercise 2.3
 
@@ -112,8 +121,8 @@ Prove the following. You may want to use a {tactic}`rw` tactic and an `apply` ta
 -/
 
 example (h : x ^ 2 = w) (h2 : w * y = z * y) : x ^ 2 = z := by
-  sorry
-  done
+  rw [h]
+  apply 
 
 /-!
 ## Exercise 2.4
