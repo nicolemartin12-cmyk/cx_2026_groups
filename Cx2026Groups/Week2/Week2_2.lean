@@ -122,7 +122,7 @@ Prove the following. You may want to use a {tactic}`rw` tactic and an `apply` ta
 
 example (h : x ^ 2 = w) (h2 : w * y = z * y) : x ^ 2 = z := by
   rw [h]
-  apply 
+  apply mul_right_cancel h2
 
 /-!
 ## Exercise 2.4
@@ -131,7 +131,8 @@ Prove the following. This is a little tricky but can can be done entirely using 
 -/
 
 example (a : G) (h2 : a * y * x ^ 2 = a * z ^ 2 * x ^ 2) : y = z ^ 2 := by
-  sorry
+  apply mul_right_cancel h2
+  apply mul_left_cancel
   done
 
 end
