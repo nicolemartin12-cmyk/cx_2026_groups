@@ -20,4 +20,7 @@ description = "Curriculum X 2026–27: interactive course notes and Lean proofs.
 "Cx2026Groups.Week2.Week2_0" = {title = "Week 2.0: Group properties"}
 "Cx2026Groups.Week2.Week2_1" = {title = "Week 2.1: Further group results"}
 "Cx2026Groups.Week2.Week2_2" = {title = "Week 2.2: Cancellation and using hypotheses"}
+"Cx2026Groups.Week3" = {title = "Week 3"}
+"Cx2026Groups.Week3.Week3_0" = {title = "Week 3.0: Subgroups and membership"}
+"Cx2026Groups.Week3.Week3_1" = {title = "Week 3.1: Intersections of subgroups"}
 Cx2026Groups = {title = "Course overview"}
